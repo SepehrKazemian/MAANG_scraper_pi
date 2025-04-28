@@ -2,6 +2,7 @@ import requests
 import os
 import sys # Import sys for error handling
 import configparser # Import configparser
+from credentials import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID # Import credentials from a separate module
 
 # --- Configuration Reading ---
 CONFIG_FILE = 'config.ini'
@@ -19,10 +20,6 @@ except (configparser.Error, ValueError) as e:
     print(f"Warning: Error reading '{CONFIG_FILE}'. Using default settings (notifications enabled). Error: {e}", file=sys.stderr)
 
 NOTIFICATIONS_ENABLED = notifications_enabled_from_config
-
-# --- Credentials (still from environment variables) ---
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 # Optional: Check if essential credentials are set at module load time
 if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
