@@ -52,20 +52,28 @@ This project is a web scraper designed to run on a Raspberry Pi. It periodically
         ```
     *   You might need to reboot or log out/in for the group changes to take effect.
 
-4.  **Configure Environment Variables:**
-    *   Create a Telegram bot using BotFather and get your `BOT_TOKEN`.
-    *   Find your `CHAT_ID`. You can send a message to your bot and then visit `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates` to find it.
-    *   Set the following environment variables before running the script:
-        *   `TELEGRAM_TOKEN`: Your Telegram Bot Token (Required).
-        *   `TELEGRAM_CHAT_ID`: The chat ID where notifications should be sent (Required).
-        *   `NOTIFICATIONS_ENABLED` (Optional): Set to `false` or `0` to disable Telegram notifications (defaults to `true`).
-    *   Example of setting environment variables in bash:
-        ```bash
-        export TELEGRAM_TOKEN="YOUR_BOT_TOKEN"
-        export TELEGRAM_CHAT_ID="YOUR_CHAT_ID"
-        export NOTIFICATIONS_ENABLED="true" # or "false" / "0"
-        ```
-    *   The script will print an error and fail to send notifications if `TELEGRAM_TOKEN` or `TELEGRAM_CHAT_ID` are not set.
+4.  **Configure Credentials and Settings:**
+    *   **Telegram Credentials (Environment Variables):**
+        *   Create a Telegram bot using BotFather and get your `BOT_TOKEN`.
+        *   Find your `CHAT_ID`. You can send a message to your bot and then visit `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates` to find it.
+        *   Set the following environment variables before running the script:
+            *   `TELEGRAM_TOKEN`: Your Telegram Bot Token (Required).
+            *   `TELEGRAM_CHAT_ID`: The chat ID where notifications should be sent (Required).
+        *   Example:
+            ```bash
+            export TELEGRAM_TOKEN="YOUR_BOT_TOKEN"
+            export TELEGRAM_CHAT_ID="YOUR_CHAT_ID"
+            ```
+        *   The script will print a warning and fail to send notifications if these are not set.
+    *   **Notification Setting (Config File):**
+        *   A `config.ini` file is used to control whether notifications are sent.
+        *   Edit `JobSearchNotif/config.ini`:
+            ```ini
+            [settings]
+            # Set to false or 0 to disable Telegram notifications
+            notifications_enabled = true
+            ```
+        *   Set `notifications_enabled` to `false` (or `0`, `no`, `off`) to disable notifications. Any other value (or if the file/setting is missing) enables notifications.
 
 5.  **Run the Scraper:**
     *   You can run the main script directly:

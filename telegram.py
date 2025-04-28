@@ -1,21 +1,37 @@
 import requests
 import os
 import sys # Import sys for error handling
+import configparser # Import configparser
 
-# Get credentials and notification setting from environment variables
+# --- Configuration Reading ---
+CONFIG_FILE = 'config.ini'
+config = configparser.ConfigParser()
+notifications_enabled_from_config = True # Default to enabled
+
+try:
+    if os.path.exists(CONFIG_FILE):
+        config.read(CONFIG_FILE)
+        # Use getboolean for robust true/false parsing (handles 1/0, yes/no, true/false, on/off)
+        notifications_enabled_from_config = config.getboolean('settings', 'notifications_enabled', fallback=True)
+    else:
+        print(f"Warning: Config file '{CONFIG_FILE}' not found. Using default settings (notifications enabled).", file=sys.stderr)
+except (configparser.Error, ValueError) as e:
+    print(f"Warning: Error reading '{CONFIG_FILE}'. Using default settings (notifications enabled). Error: {e}", file=sys.stderr)
+
+NOTIFICATIONS_ENABLED = notifications_enabled_from_config
+
+# --- Credentials (still from environment variables) ---
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
-# Check if notifications are enabled (default to True if variable is not set or not 'false'/'0')
-NOTIFICATIONS_ENABLED = not os.getenv("NOTIFICATIONS_ENABLED", "true").lower() in ["false", "0"]
 
 # Optional: Check if essential credentials are set at module load time
-# if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
-#     print("Warning: TELEGRAM_TOKEN or TELEGRAM_CHAT_ID environment variables not set. Notifications will fail.", file=sys.stderr)
+if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
+    print("Warning: TELEGRAM_TOKEN or TELEGRAM_CHAT_ID environment variables not set. Notifications will fail if enabled.", file=sys.stderr)
 
 def send_notification(message):
     if not NOTIFICATIONS_ENABLED:
         # Optional: print a message indicating notifications are off
-        # print("Info: Notifications are disabled via environment variable.", file=sys.stderr)
+        # print("Info: Notifications are disabled via config file.", file=sys.stderr)
         return # Skip sending if disabled
 
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
