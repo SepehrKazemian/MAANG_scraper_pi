@@ -84,7 +84,7 @@ def fetch_all_jobs(seen_jobs):
                 continue
             print(job_key)
 
-            notify_job("Google", title, location, created, apply_url)
+            # notify_job("Google", title, location, created, apply_url)
             new_jobs.append(job_key)
             seen_set.add(job_key)
 

@@ -157,7 +157,7 @@ def run(port):
                         new_jobs_found_overall += 1
                         if not first_run:
                             print(f"✨ New Microsoft Job Found: {title} — {location_text}")
-                            tel.send_notification(f"Microsoft: 🔹 {title} — {location_text} \n🕒 {date_text} \n🔗 {job_url}")
+                            # tel.send_notification(f"Microsoft: 🔹 {title} — {location_text} \n🕒 {date_text} \n🔗 {job_url}")
                         else:
                             print(f"Found (first run): {title} — {location_text}")
 

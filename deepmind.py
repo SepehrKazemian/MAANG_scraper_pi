@@ -47,7 +47,7 @@ def fetch_deepmind_jobs(seen_jobs):
         if job_key in seen_set:
             continue
 
-        notify_job("DeepMind", title, location, updated, apply_url)
+        # notify_job("DeepMind", title, location, updated, apply_url)
         new_jobs.append(job_key)
         seen_set.add(job_key)
 
