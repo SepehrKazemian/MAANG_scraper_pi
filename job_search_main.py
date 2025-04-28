@@ -79,6 +79,9 @@ while True:
     except Exception as e:
         print(f"❌ Error running Microsoft scraper: {e}", file=sys.stderr)
 
+    # Add a small delay to allow pychrome background thread to potentially clean up
+    time.sleep(2)
+
     # --- Google ---
     try:
         print("Running Google scraper...")
