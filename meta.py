@@ -98,7 +98,7 @@ def run(port):
 
                 except Exception as e:
                     print(f"Error parsing job details for {full_url}: {e}", file=sys.stderr)
-                    # tel.send_notification(f"Error parsing Meta job details: {full_url}") # Optional notification
+                    tel.send_notification(f"Error parsing Meta job details: {full_url}") # Optional notification
 
                 today = datetime.now().strftime("%Y-%m-%d")
                 # Key format for checking: url::title — location
